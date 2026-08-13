@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="Redbox">
+  <title>Redbox</title>
+  <!--
+    The Redbox symbol: an empty pair of brackets - the red box - in Vivid
+    Crimson on carbon black. Same Lato Black brackets as the wordmark, so the
+    two read as one family. Outlined for the same reason as the wordmark.
+  -->
+  <rect width="1024" height="1024" rx="180" fill="#1E1E1E"/>
+  <g transform="translate(270.2 699.9) scale(0.30486 -0.30486)">
+    <g>
+      <path fill="#EB3A3A" transform="translate(0.0 0)" d="M90.0 -324.0V1557.0H538.0V1439.0Q538.0 1408.0 515.5 1386.0Q493.0 1364.0 458.0 1364.0H348.0V-131.0H458.0Q493.0 -131.0 515.5 -153.0Q538.0 -175.0 538.0 -205.0V-324.0Z"/>
+      <path fill="#EB3A3A" transform="translate(986.0 0)" d="M62.0 1557.0H510.0V-324.0H62.0V-205.0Q62.0 -175.0 84.5 -153.0Q107.0 -131.0 142.0 -131.0H252.0V1364.0H142.0Q107.0 1364.0 84.5 1386.0Q62.0 1408.0 62.0 1439.0Z"/>
+    </g>
+  </g>
+</svg>

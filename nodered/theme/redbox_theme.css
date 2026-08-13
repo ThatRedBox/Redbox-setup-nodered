@@ -1,0 +1,64 @@
+/*
+ *  Redbox theme for the Node-RED editor
+ *
+ *  The editor is reached through the Edgeberry device interface, which sits
+ *  directly above it wearing Redbox's carbon navigation bar. So this theme's
+ *  first job is continuity: the editor header is the same carbon, not
+ *  Node-RED's near-black, so the two bars read as one surface rather than two
+ *  dark strips that nearly match.
+ *
+ *  Everything else is Node-RED's own light editor, with its red swapped for
+ *  Vivid Crimson. Node-RED is already a red-accented editor, so this is a
+ *  small correction rather than a repaint - which is why there is so little
+ *  here, and why there should stay so little.
+ */
+
+/*   Redbox colours   */
+:root {
+  --redbox_crimson: #EB3A3A;
+  --redbox_carbon: #1E1E1E;
+  --redbox_white: #FFFFFF;
+  --redbox_light_grey: #E1E2E4;
+  --redbox_grey: #6D7279;
+
+  /* Darker crimsons for hover/active states */
+  --redbox_crimson_hover: #D22B2B;
+  --redbox_crimson_active: #B42121;
+}
+
+:root {
+  /* Header: the same carbon as the Edgeberry bar above it */
+  --red-ui-header-background: var(--redbox_carbon);
+  --red-ui-header-accent: var(--redbox_crimson);
+
+  /* Deploy button: Vivid Crimson instead of Node-RED's darker red */
+  --red-ui-deploy-button-background: var(--redbox_crimson);
+  --red-ui-deploy-button-background-hover: var(--redbox_crimson_hover);
+  --red-ui-deploy-button-background-active: var(--redbox_crimson_active);
+
+  /* Primary buttons in the workspace and sidebar */
+  --red-ui-workspace-button-background-primary: var(--redbox_crimson);
+  --red-ui-workspace-button-background-primary-hover: var(--redbox_crimson_hover);
+
+  --red-ui-text-color-link: var(--redbox_crimson);
+}
+
+#red-ui-header {
+  border-bottom: none;
+}
+
+#red-ui-header .red-ui-deploy-button {
+  font-weight: bold;
+}
+
+/*
+ * The header title is the only place the brand appears inside the editor
+ * (settings.js deliberately serves no logo image there, so the title text is
+ * the mark). Lato Black is what the wordmark is set in; the stack behind it
+ * covers the device where Lato is not installed.
+ */
+#red-ui-header .red-ui-header-toolbar > li:first-child a {
+  font-family: "Lato", -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-weight: 900;
+  letter-spacing: 0.01em;
+}

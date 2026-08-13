@@ -1,0 +1,15 @@
+{
+  "name": "node-red-theme-redbox",
+  "version": "0.1.0",
+  "description": "Redbox theme for the Node-RED editor",
+  "license": "MIT",
+  "keywords": [
+    "node-red",
+    "node-red-theme"
+  ],
+  "node-red": {
+    "plugins": {
+      "redbox": "redbox_theme.js"
+    }
+  }
+}

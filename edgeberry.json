@@ -1,0 +1,13 @@
+{
+  "name": "Redbox",
+  "version": "v0.1.0",
+  "description": "Node-RED on an Edgeberry device",
+  "ui": { "port": 1880 },
+  "hostnamePrefix": "REDBOX",
+  "branding": {
+    "logo": "assets/Redbox_logo.svg",
+    "mark": "assets/favicon.ico",
+    "colors": { "fg": "#F5F5F5", "bg": "#1E1E1E", "primary": "#EB3A3A" }
+  },
+  "service": { "unit": "nodered.service", "supports": ["restart", "stop", "start"] }
+}
