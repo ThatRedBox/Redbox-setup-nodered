@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/Redbox_logo.svg" alt="Red[box]" width="420">
+  <img src="assets/Redbox_logo_dark.svg" alt="Red[box]" width="420">
 </p>
 
 **Redbox** turns an [Edgeberry](https://github.com/Edgeberry) device into a Node-RED box. It is
