@@ -10,10 +10,12 @@
 #   Before changing this script
 #  ----------------------------------------------------------------------------
 #
-#   The order is load-bearing. Node-RED reads its palette and its flow file once,
-#   at startup, so it is started at the very end - after the node packages are
-#   installed. Start it any earlier and the install still reports success while
-#   Node-RED runs with an empty palette.
+#   The order is load-bearing. Edgeberry is checked, and installed if missing,
+#   first - before Node.js - because its installer is what is expected to have
+#   put Node.js in place on a fresh device. Node-RED reads its palette and its
+#   flow file once, at startup, so it is started at the very end - after the
+#   node packages are installed. Start it any earlier and the install still
+#   reports success while Node-RED runs with an empty palette.
 #
 #   Node.js belongs to the whole device, not to this project. Edgeberry runs on
 #   the same /usr/bin/node. Node.js is therefore installed when it is missing and
@@ -159,6 +161,45 @@ echo ""
 # dependencies below may well already be installed, so warn and continue.
 run_step "Refreshing the package index (this can take a minute)" warning \
     apt update
+
+# Install Edgeberry using its own official installer, non-interactively.
+#
+# Redbox is Node-RED *for* an Edgeberry device: without the edgeberry CLI
+# there is no --register-application to call later, and without Edgeberry's
+# own nginx there is no proxy to reach the editor through. So it is checked
+# and, if missing, installed here - first, before anything else - rather
+# than left to be discovered only when the registration step fails after
+# Node-RED is already fully set up.
+#
+# Installing it first also means the Node.js check right after this one sees
+# whatever Node.js Edgeberry's installer already put in place, which is the
+# version this device is meant to run.
+install_edgeberry_from_scratch(){
+    local installer output
+    echo -n -e "\e[0mInstalling Edgeberry \e[0m"
+    installer=$(mktemp)
+    output=$( {
+        set -e
+        curl -fsL -o "${installer}" \
+            https://github.com/Edgeberry/Edgeberry/releases/latest/download/install.sh
+        bash "${installer}" -y
+    } 2>&1 )
+    local result=$?
+    rm -f "${installer}"
+    if [ ${result} -eq 0 ]; then
+        report_success
+    else
+        report_failure "${output}"
+    fi
+}
+
+echo -n -e "\e[0mChecking for Edgeberry \e[0m"
+if which edgeberry >/dev/null 2>&1; then
+    echo -e "\e[0;32m[Installed] \e[0m$(edgeberry --version 2>/dev/null)";
+else
+    echo -e "\e[0;33m[Not installed] \e[0m";
+    install_edgeberry_from_scratch
+fi
 
 # Check for NodeJS. If it's not installed, install it.
 #
