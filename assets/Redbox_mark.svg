@@ -1,15 +1,74 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="Redbox">
-  <title>Redbox</title>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 1024 1024"
+   role="img"
+   aria-label="Redbox"
+   version="1.1"
+   id="svg14"
+   sodipodi:docname="Redbox_mark_nobg.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   inkscape:export-filename="Redbox_mark_nobg.png"
+   inkscape:export-xdpi="37.5"
+   inkscape:export-ydpi="37.5"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs18" />
+  <sodipodi:namedview
+     id="namedview16"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="0.76660156"
+     inkscape:cx="512"
+     inkscape:cy="513.30446"
+     inkscape:window-width="1854"
+     inkscape:window-height="1011"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg14" />
+  <title
+     id="title2">Redbox</title>
   <!--
     The Redbox symbol: an empty pair of brackets - the red box - in Vivid
     Crimson on carbon black. Same Lato Black brackets as the wordmark, so the
     two read as one family. Outlined for the same reason as the wordmark.
   -->
-  <rect width="1024" height="1024" rx="180" fill="#1E1E1E"/>
-  <g transform="translate(270.2 699.9) scale(0.30486 -0.30486)">
-    <g>
-      <path fill="#EB3A3A" transform="translate(0.0 0)" d="M90.0 -324.0V1557.0H538.0V1439.0Q538.0 1408.0 515.5 1386.0Q493.0 1364.0 458.0 1364.0H348.0V-131.0H458.0Q493.0 -131.0 515.5 -153.0Q538.0 -175.0 538.0 -205.0V-324.0Z"/>
-      <path fill="#EB3A3A" transform="translate(986.0 0)" d="M62.0 1557.0H510.0V-324.0H62.0V-205.0Q62.0 -175.0 84.5 -153.0Q107.0 -131.0 142.0 -131.0H252.0V1364.0H142.0Q107.0 1364.0 84.5 1386.0Q62.0 1408.0 62.0 1439.0Z"/>
+  <g
+     transform="translate(270.2 699.9) scale(0.30486 -0.30486)"
+     id="g12">
+    <g
+       id="g10">
+      <path
+         fill="#EB3A3A"
+         transform="translate(0.0 0)"
+         d="M90.0 -324.0V1557.0H538.0V1439.0Q538.0 1408.0 515.5 1386.0Q493.0 1364.0 458.0 1364.0H348.0V-131.0H458.0Q493.0 -131.0 515.5 -153.0Q538.0 -175.0 538.0 -205.0V-324.0Z"
+         id="path6" />
+      <path
+         fill="#EB3A3A"
+         transform="translate(986.0 0)"
+         d="M62.0 1557.0H510.0V-324.0H62.0V-205.0Q62.0 -175.0 84.5 -153.0Q107.0 -131.0 142.0 -131.0H252.0V1364.0H142.0Q107.0 1364.0 84.5 1386.0Q62.0 1408.0 62.0 1439.0Z"
+         id="path8" />
     </g>
   </g>
+  <metadata
+     id="metadata193">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>Redbox</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
 </svg>
