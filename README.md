@@ -25,14 +25,17 @@ they are system components, and something else on the device may be using them. 
 
 [`nodered/package.json`](nodered/package.json) is the palette. It carries the Edgeberry and
 dashboard nodes plus the official Raspberry Pi set — `node-red-node-pi-gpio` for the I/O pins,
-and the serial, ping, random, smooth, buffer-parser and play-audio nodes that ship alongside it.
-They are declared here, at pinned versions, rather than left to the Node-RED installer's
-`--skip-pi` prompt: that installs into `~/.node-red`, which is not the userDir this service runs
-with.
+`node-red-node-pi-mcp3008` for the ADC the Pi does not have on its own, and the serial, ping,
+random, smooth, buffer-parser and play-audio nodes that ship alongside them. They are declared
+here, at pinned versions, rather than left to the Node-RED installer's `--skip-pi` prompt: that
+installs into `~/.node-red`, which is not the userDir this service runs with.
+
+The MCP3008 reads over SPI, and the Edge Explorer hardware cartridge exposes I2C, so the installer
+enables both buses — see below.
 
 ## What the installer does, and what it deliberately doesn't
 
-Two things in [`scripts/install.sh`](scripts/install.sh) are load-bearing and worth knowing
+Three things in [`scripts/install.sh`](scripts/install.sh) are load-bearing and worth knowing
 before changing it:
 
 **Node-RED starts last.** It reads its palette and its flow file once, at startup. Start it
@@ -49,6 +52,22 @@ rather than being "fixed" underneath another application.
 `NODEREDVERSION` in the script is pinned at **4.1.13** on purpose. Node-RED 5.x needs Node.js
 ≥ 22.9, and an Edgeberry device runs Debian's Node.js 20. Before raising it, check that both the
 palette *and* Edgeberry support the Node.js version the newer line requires.
+
+**The hardware buses are enabled, but never fatally.** SPI and I2C are both off by default on a
+Raspberry Pi, and Redbox wants both: the MCP3008 nodes read their ADC over SPI, and the Edge
+Explorer hardware cartridge exposes I2C. The installer turns them on through `raspi-config nonint
+do_spi 0` and `do_i2c 0` rather than editing `config.txt` itself, because the buses are
+device-level settings owned by the OS — and `raspi-config` also un-blacklists the kernel modules
+and adds `i2c-dev` to `/etc/modules`, which editing `config.txt` alone would miss. Only some nodes
+need these buses, and a device not running Raspberry Pi OS has no `raspi-config` at all, so a bus
+that cannot be enabled is reported and the install carries on.
+
+Two states are checked, because they answer different questions: `raspi-config nonint get_spi`
+reads the boot configuration and says what the device will do after its *next* boot, while
+`/dev/spidev*` (and `/dev/i2c-*`) is what Node-RED actually opens. `do_spi`/`do_i2c` apply the
+parameter to the running kernel as well as writing the boot configuration, so a bus normally
+appears without a reboot — when it doesn't, the installer says a reboot is needed rather than
+leaving the nodes to fail at runtime on a device whose configuration looks correct.
 
 ## The `edgeberry.json` manifest
 

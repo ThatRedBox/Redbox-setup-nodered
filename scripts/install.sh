@@ -194,6 +194,62 @@ else
     run_step "Installing jq using apt" fatal apt install -y jq
 fi
 
+# The Raspberry Pi's SPI and I2C buses are both off by default, and Redbox wants
+# both: the MCP3008 nodes in the palette read their ADC over SPI, and the Edge
+# Explorer hardware cartridge exposes I2C.
+#
+# They are enabled through raspi-config rather than by editing config.txt from
+# here. The buses are device-level settings owned by the OS, and raspi-config is
+# what the rest of the system expects to have written them - it also un-blacklists
+# the kernel modules and, for I2C, adds i2c-dev to /etc/modules, which an edit of
+# config.txt alone would miss.
+#
+# Not fatal, deliberately. Only some nodes need these buses, and a device that is
+# not running Raspberry Pi OS has no raspi-config at all. Redbox installs and runs
+# either way, so a bus that cannot be enabled is reported and the install carries
+# on.
+#
+# Enable one hardware bus. Usage:
+#   enable_bus "SPI" spi "/dev/spidev*"
+#
+# Two states are checked, because they answer different questions: 'get_<bus>'
+# only reads the boot configuration, so it says what the device will do after its
+# next boot, while the device nodes under /dev are what Node-RED actually opens.
+enable_bus(){
+    local label="$1" bus="$2" glob="$3"
+
+    echo -n -e "\e[0mChecking the ${label} bus \e[0m"
+    if ! which raspi-config >/dev/null 2>&1; then
+        echo -e "\e[0;33m[Skipped] \e[0mno raspi-config on this device"
+        return 0
+    fi
+    # Unquoted on purpose: ${glob} has to expand to the device nodes, and ls
+    # fails when nothing matches, which is exactly the signal wanted here.
+    if [ "$(raspi-config nonint "get_${bus}")" = "0" ] && ls ${glob} >/dev/null 2>&1; then
+        echo -e "\e[0;32m[Enabled] \e[0m"
+        return 0
+    fi
+    echo -e "\e[0;33m[Not enabled] \e[0m"
+
+    # 'do_<bus> 0' enables (1 would disable it). It writes the dtparam to the
+    # boot configuration and applies the same parameter to the running kernel,
+    # so the bus normally comes up without a reboot.
+    run_step "Enabling the ${label} bus" warning \
+        raspi-config nonint "do_${bus}" 0 || return 1
+
+    # Where the running kernel did not take it, the setting is real only after a
+    # reboot. Say so here: the alternative is nodes that fail at runtime on a
+    # device whose configuration looks perfectly correct.
+    if ! ls ${glob} >/dev/null 2>&1; then
+        report_failure "${label} is enabled in the boot configuration, but no ${glob} device has
+appeared. Reboot the device to bring the bus up - until then the nodes that use
+${label} cannot reach their hardware." warning
+    fi
+}
+
+enable_bus "SPI" spi "/dev/spidev*"
+enable_bus "I2C" i2c "/dev/i2c-*"
+
 # The version of Node-RED currently installed globally, read from its
 # package.json. Never ask node-red itself: when it cannot run on the installed
 # Node.js it prints an error and still exits 0, so 'node-red --version' reports
