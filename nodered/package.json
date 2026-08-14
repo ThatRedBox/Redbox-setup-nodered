@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "license": "MIT",
   "private": false,
-  "homepage": "https://github.com/Edgeberry/Redbox",
+  "homepage": "https://github.com/ThatRedBox/Redbox-setup-nodered",
   "dependencies": {
     "@edgeberry/device-node-red-contrib": "^3.8.0",
     "@flowfuse/node-red-dashboard": "~1.30.2",

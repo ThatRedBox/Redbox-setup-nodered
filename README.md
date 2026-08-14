@@ -2,6 +2,8 @@
   <img src="assets/Redbox_logo_dark.svg" alt="Red[box]" width="420">
 </p>
 
+![Redbox banner](https://raw.githubusercontent.com/ThatRedBox/.github/refs/heads/main/brand/Redbox_banner.png)
+
 **Redbox** turns an [Edgeberry](https://github.com/Edgeberry) device into a Node-RED box. It is
 an installer and a set of configuration: it puts Node-RED on the device, registers it with
 Edgeberry as *the* application, and dresses both the device interface and the Node-RED editor in
@@ -12,7 +14,7 @@ the Redbox brand. What the box then *does* is whatever you wire up in the editor
 Download and execute the installation script:
 
 ```
-wget -O install.sh https://github.com/Edgeberry/Redbox/releases/latest/download/install.sh;
+wget -O install.sh https://github.com/ThatRedBox/Redbox-setup-nodered/releases/latest/download/install.sh;
 chmod +x ./install.sh;
 sudo ./install.sh;
 ```
@@ -92,13 +94,14 @@ served under and need no changes; anything that must be absolute should read the
 | White | `#FFFFFF` | "Red" in the wordmark, on carbon |
 
 The wordmark is **Red[box]** set in **Lato Black (900)**: `Red` in white, `[box]` in Vivid
-Crimson. The symbol is `[ ]` — the red box, empty — in Vivid Crimson on carbon.
+Crimson. The symbol is `[ ]` — the red box, empty — in Vivid Crimson on a transparent ground, so
+it sits on whatever surface it lands on.
 
 | Asset | Use |
 |---|---|
 | [`assets/Redbox_logo.svg`](assets/Redbox_logo.svg) | The wordmark, for dark backgrounds. This is what the Edgeberry navigation bar wears |
 | [`assets/Redbox_logo_dark.svg`](assets/Redbox_logo_dark.svg) | The same wordmark with `Red` in carbon, for light backgrounds |
-| [`assets/Redbox_mark.svg`](assets/Redbox_mark.svg) | The symbol, on its carbon tile |
+| [`assets/Redbox_mark.svg`](assets/Redbox_mark.svg) | The symbol, on a transparent ground |
 | [`assets/favicon.ico`](assets/favicon.ico) | The symbol at 16/32/48/64 px, for browser tabs |
 
 The letterforms in the SVGs are converted to outlines rather than set as live text, so they
