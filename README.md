@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="assets/Redbox_logo_dark.svg" alt="Red[box]" width="420">
-</p>
-
 ![Redbox banner](https://raw.githubusercontent.com/ThatRedBox/.github/refs/heads/main/brand/Redbox_banner.png)
 
 **Redbox** turns an [Edgeberry](https://github.com/Edgeberry) device into a Node-RED box. It is
