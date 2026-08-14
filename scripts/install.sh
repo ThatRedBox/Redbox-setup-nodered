@@ -40,8 +40,8 @@
 ##
 
 PROJECT=Redbox
-REPONAME=Redbox
-REPOOWNER=Edgeberry
+REPONAME=Redbox-setup-nodered
+REPOOWNER=ThatRedBox
 
 APPDIR=/opt/${PROJECT}
 SYSDCONF=redbox-nodered-service.conf
