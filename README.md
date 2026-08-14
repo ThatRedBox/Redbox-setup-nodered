@@ -23,6 +23,15 @@ Removal is `sudo /opt/Redbox/uninstall.sh`. It leaves Node.js, NPM, Node-RED and
 they are system components, and something else on the device may be using them. It does remove
 `/opt/Redbox`, and the flows with it, so export anything worth keeping first.
 
+## Palette
+
+[`nodered/package.json`](nodered/package.json) is the palette. It carries the Edgeberry and
+dashboard nodes plus the official Raspberry Pi set — `node-red-node-pi-gpio` for the I/O pins,
+and the serial, ping, random, smooth, buffer-parser and play-audio nodes that ship alongside it.
+They are declared here, at pinned versions, rather than left to the Node-RED installer's
+`--skip-pi` prompt: that installs into `~/.node-red`, which is not the userDir this service runs
+with.
+
 ## What the installer does, and what it deliberately doesn't
 
 Two things in [`scripts/install.sh`](scripts/install.sh) are load-bearing and worth knowing

@@ -194,51 +194,6 @@ else
     run_step "Installing jq using apt" fatal apt install -y jq
 fi
 
-##
-#   Raspberry Pi GPIO support
-#   node-red-node-pi-gpio does not touch the pins from Node.js. It runs a Python
-#   helper (nrgpio.py) whose first line is 'import RPi.GPIO', so without that
-#   module the GPIO nodes load into the palette and then fail at runtime - which
-#   looks like a broken flow rather than a missing package.
-#
-#   Which apt package provides RPi.GPIO depends on the release. From Debian 12
-#   it is python3-rpi-lgpio, a drop-in replacement implemented over lgpio,
-#   because the original python3-rpi.gpio talks to a peripheral layout the Pi 5
-#   does not have. The two both provide RPi.GPIO and cannot be co-installed.
-#
-#   Not fatal, and skipped entirely on hardware that is not a Pi: everything
-#   else in the palette works regardless, and refusing to install Redbox on a
-#   non-Pi machine over an unusable GPIO node would be the wrong trade.
-##
-echo -n -e "\e[0mChecking for Raspberry Pi GPIO support \e[0m"
-if ! grep -q Raspberry /proc/cpuinfo 2>/dev/null; then
-    echo -e "\e[0;33m[Not a Raspberry Pi, skipped]\e[0m"
-elif python3 -c "import RPi.GPIO" >/dev/null 2>&1; then
-    echo -e "\e[0;32m[Installed] \e[0m"
-else
-    echo -e "\e[0;33m[Not installed] \e[0m"
-
-    # VERSION_ID is absent on Debian testing/unstable, where the newer package
-    # is the right guess.
-    os_version=$(. /etc/os-release 2>/dev/null && echo "${VERSION_ID:-99}")
-    if [ "${os_version%%.*}" -ge 12 ] 2>/dev/null; then
-        GPIOPKG=python3-rpi-lgpio
-    else
-        GPIOPKG=python3-rpi.gpio
-    fi
-
-    if [ "${GPIOPKG}" = "python3-rpi-lgpio" ] && dpkg -s python3-rpi.gpio >/dev/null 2>&1; then
-        if ! run_step "Removing python3-rpi.gpio, superseded by rpi-lgpio" warning \
-            apt purge -y python3-rpi.gpio; then
-            problems=$((problems+1))
-        fi
-    fi
-
-    if ! run_step "Installing ${GPIOPKG}" warning apt install -y "${GPIOPKG}"; then
-        problems=$((problems+1))
-    fi
-fi
-
 # The version of Node-RED currently installed globally, read from its
 # package.json. Never ask node-red itself: when it cannot run on the installed
 # Node.js it prints an error and still exits 0, so 'node-red --version' reports
@@ -257,14 +212,11 @@ installed_nodered_version(){
 # replace the Node.js that Edgeberry runs on. Without one it leaves Node.js
 # alone, which is what this project wants.
 #
-# --skip-pi is not a decision to go without the Pi nodes - Redbox installs them,
-# see the palette in nodered/package.json. It is because the official installer
-# would npm-install them into the installing user's own home directory, which is
-# not the userDir Node-RED runs from here (/opt/Redbox/nodered), and would take
-# whatever @latest resolves to that day. Declaring them in package.json puts
-# them in the right place at a pinned version. Nothing else is lost: the
-# installer's Pi setup that does matter - the Python GPIO library - is not
-# governed by this flag, and Redbox installs it itself either way.
+# --skip-pi does not mean going without the Pi nodes: they are in the palette in
+# nodered/package.json. It is that the installer's own copy would land in
+# ~/.node-red, not the userDir Node-RED runs from here. Its other Pi setup - the
+# RPi.GPIO Python library the GPIO nodes call - is not governed by this flag and
+# happens anyway.
 install_nodered_from_scratch(){
     local installer output
     echo -n -e "\e[0mInstalling Node-RED ${NODEREDVERSION} \e[0m"
