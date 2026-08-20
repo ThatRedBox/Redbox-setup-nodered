@@ -8,6 +8,95 @@
         "env": []
     },
     {
+        "id": "d81f5c30a7e94b26",
+        "type": "ui-base",
+        "name": "Redbox",
+        "path": "/dashboard",
+        "appIcon": "",
+        "includeClientData": true,
+        "acceptsClientConfig": [
+            "ui-notification",
+            "ui-control"
+        ],
+        "showPathInSidebar": false,
+        "headerContent": "none",
+        "navigationStyle": "none",
+        "titleBarStyle": "hidden",
+        "showReconnectNotification": true,
+        "notificationDisplayTime": "1",
+        "showDisconnectNotification": true,
+        "allowInstall": false
+    },
+    {
+        "id": "e5c082b41d3f97a6",
+        "type": "ui-theme",
+        "name": "Redbox",
+        "colors": {
+            "surface": "#1e1e1e",
+            "primary": "#eb3a3a",
+            "bgPage": "#141414",
+            "groupBg": "#1e1e1e",
+            "groupOutline": "#333333"
+        },
+        "sizes": {
+            "density": "default",
+            "pagePadding": "12px",
+            "groupGap": "12px",
+            "groupBorderRadius": "4px",
+            "widgetGap": "12px"
+        }
+    },
+    {
+        "id": "c3a97e15b28d640f",
+        "type": "ui-page",
+        "name": "Home",
+        "ui": "d81f5c30a7e94b26",
+        "path": "/home",
+        "icon": "home",
+        "layout": "grid",
+        "theme": "e5c082b41d3f97a6",
+        "breakpoints": [
+            {
+                "name": "Default",
+                "px": "0",
+                "cols": "3"
+            },
+            {
+                "name": "Tablet",
+                "px": "576",
+                "cols": "6"
+            },
+            {
+                "name": "Small Desktop",
+                "px": "768",
+                "cols": "9"
+            },
+            {
+                "name": "Desktop",
+                "px": "1024",
+                "cols": "12"
+            }
+        ],
+        "order": 1,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "b7e13f0a6c95d824",
+        "type": "ui-group",
+        "name": "Redbox",
+        "page": "c3a97e15b28d640f",
+        "width": "12",
+        "height": 1,
+        "order": 1,
+        "showTitle": false,
+        "className": "",
+        "visible": "false",
+        "disabled": "true",
+        "groupType": "default"
+    },
+    {
         "id": "c48a1f6b2d09e735",
         "type": "comment",
         "z": "b1d7c0a2e4f35a91",
@@ -36,7 +125,7 @@
         "once": true,
         "onceDelay": "0.1",
         "topic": "info",
-        "payload": "{\"name\":\"Redbox\",\"version\":\"v0.1.1\",\"description\":\"Node-RED on an Edgeberry device\",\"routes\":[{\"label\":\"Dashboard\",\"path\":\"/dashboard\",\"icon\":\"fa-chart-line\",\"default\":true},{\"label\":\"Editor\",\"path\":\"/editor\",\"icon\":\"fa-pencil\"}]}",
+        "payload": "{\"name\":\"Redbox\",\"version\":\"v0.1.2\",\"description\":\"Node-RED on an Edgeberry device\",\"routes\":[{\"label\":\"Dashboard\",\"path\":\"/dashboard\",\"icon\":\"fa-chart-line\",\"default\":true},{\"label\":\"Editor\",\"path\":\"/editor\",\"icon\":\"fa-pencil\"}]}",
         "payloadType": "json",
         "x": 160,
         "y": 120,
@@ -118,96 +207,51 @@
         "order": 1,
         "width": 0,
         "height": 0,
+        "content": "## This box does nothing... yet!\n\nOpen the editor and wire up your ideas!",
         "className": "",
-        "content": "## This box does nothing yet\n\nOpen the editor, wire something up, and give this page a reason to exist.",
         "x": 160,
         "y": 320,
-        "wires": []
+        "wires": [
+            []
+        ]
     },
     {
-        "id": "b7e13f0a6c95d824",
-        "type": "ui-group",
-        "name": "Redbox",
-        "page": "c3a97e15b28d640f",
-        "width": "12",
-        "height": 1,
-        "order": 1,
-        "showTitle": false,
+        "id": "6678f207064bb1bb",
+        "type": "ui-button",
+        "z": "b1d7c0a2e4f35a91",
+        "group": "b7e13f0a6c95d824",
+        "name": "",
+        "label": "Beep",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "emulateClick": false,
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
         "className": "",
-        "visible": "true",
-        "disabled": "false",
-        "groupType": "default"
-    },
-    {
-        "id": "c3a97e15b28d640f",
-        "type": "ui-page",
-        "name": "Home",
-        "ui": "d81f5c30a7e94b26",
-        "path": "/home",
-        "icon": "home",
-        "layout": "grid",
-        "theme": "e5c082b41d3f97a6",
-        "breakpoints": [
-            {
-                "name": "Default",
-                "px": "0",
-                "cols": "3"
-            },
-            {
-                "name": "Tablet",
-                "px": "576",
-                "cols": "6"
-            },
-            {
-                "name": "Small Desktop",
-                "px": "768",
-                "cols": "9"
-            },
-            {
-                "name": "Desktop",
-                "px": "1024",
-                "cols": "12"
-            }
-        ],
-        "order": 1,
-        "className": "",
-        "visible": "true",
-        "disabled": "false"
-    },
-    {
-        "id": "d81f5c30a7e94b26",
-        "type": "ui-base",
-        "name": "Redbox",
-        "path": "/dashboard",
-        "appIcon": "",
-        "includeClientData": true,
-        "acceptsClientConfig": [
-            "ui-notification",
-            "ui-control"
-        ],
-        "showPathInSidebar": false,
-        "showReconnectNotification": true,
-        "notificationDisplayTime": "1",
-        "showDisconnectNotification": true,
-        "allowInstall": false
-    },
-    {
-        "id": "e5c082b41d3f97a6",
-        "type": "ui-theme",
-        "name": "Redbox",
-        "colors": {
-            "surface": "#1e1e1e",
-            "primary": "#eb3a3a",
-            "bgPage": "#141414",
-            "groupBg": "#1e1e1e",
-            "groupOutline": "#333333"
-        },
-        "sizes": {
-            "density": "default",
-            "pagePadding": "12px",
-            "groupGap": "12px",
-            "groupBorderRadius": "4px",
-            "widgetGap": "12px"
-        }
+        "icon": "",
+        "iconPosition": "left",
+        "payload": "",
+        "payloadType": "date",
+        "topic": "identify",
+        "topicType": "str",
+        "buttonColor": "",
+        "textColor": "",
+        "iconColor": "",
+        "enableClick": true,
+        "enablePointerdown": false,
+        "pointerdownPayload": "",
+        "pointerdownPayloadType": "str",
+        "enablePointerup": false,
+        "pointerupPayload": "",
+        "pointerupPayloadType": "str",
+        "x": 170,
+        "y": 360,
+        "wires": [
+            [
+                "e7b05c31948da2f6"
+            ]
+        ]
     }
 ]
