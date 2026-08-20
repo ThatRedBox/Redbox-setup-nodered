@@ -14,7 +14,13 @@ sudo ./install.sh
 
 Editor: `http://<device>/application/editor` · Dashboard: `http://<device>/application/dashboard`
 
-Re-run the installer to update - it takes the latest release and preserves your flows.
+A fresh install comes with a starter flow. Its **Edgeberry Platform** group is
+what puts this box on the device interface - the name, the links and the health
+light all come from the messages those two inject nodes send. Edit them to suit
+what the box becomes; delete them and the device interface has nothing to show.
+
+Re-run the installer to update - it takes the latest release and preserves your
+flows. The starter flow is only ever written when there is none.
 
 Uninstall with `sudo /opt/Redbox/uninstall.sh`. It removes `/opt/Redbox` **and the flows with it**,
 so export anything worth keeping. Node.js, NPM, Node-RED and jq stay: they are shared with the rest

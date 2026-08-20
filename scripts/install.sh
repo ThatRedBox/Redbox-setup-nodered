@@ -14,8 +14,9 @@
 #   first - before Node.js - because its installer is what is expected to have
 #   put Node.js in place on a fresh device. Node-RED reads its palette and its
 #   flow file once, at startup, so it is started at the very end - after the
-#   node packages are installed. Start it any earlier and the install still
-#   reports success while Node-RED runs with an empty palette.
+#   node packages are installed and the default flow is in place. Start it any
+#   earlier and the install still reports success while Node-RED runs with an
+#   empty palette, or with no flow to announce this box to Edgeberry with.
 #
 #   Node.js belongs to the whole device, not to this project. Edgeberry runs on
 #   the same /usr/bin/node. Node.js is therefore installed when it is missing and
@@ -504,6 +505,46 @@ else
 ${npm_output}"
 fi
 
+# Put the default flow in place.
+#
+# This is what makes Redbox appear on the device interface. Registering the
+# manifest below tells Edgeberry where the application lives and which port to
+# proxy; it says nothing about the application's name, version or links. Those
+# come from an 'info' message a flow sends to the Edgeberry node at startup, so
+# a box with no flow registers as an application with no name and no way in.
+#
+# Written only when it is not already there. From the first deploy onwards the
+# flow file is the user's work, and re-running this installer to update must not
+# overwrite it - which is why the shipped copy lives outside the userDir and is
+# copied in, rather than being unpacked straight over it.
+#
+# The path is the flowFile from nodered/settings.js, resolved against the
+# userDir the systemd drop-in points Node-RED at. Change it in one place and it
+# has to change here too.
+FLOWFILE=${APPDIR}/nodered/flows/Redbox_flows.json
+echo -n -e "\e[0mInstalling the default flow \e[0m"
+if [ -f "${FLOWFILE}" ]; then
+    echo -e "\e[0;32m[Kept] \e[0mthis device already has flows"
+else
+    flow_output=$( {
+        set -e
+        mkdir -p "$(dirname "${FLOWFILE}")"
+        cp ${APPDIR}/defaults/Redbox_flows.json "${FLOWFILE}"
+    } 2>&1 )
+    if [ $? -eq 0 ]; then
+        report_success
+    else
+        # Not fatal: Node-RED starts fine without it. What is lost is the
+        # application's entry on the device interface, so say which flow to
+        # rebuild rather than only that a copy failed.
+        report_failure "cp ${APPDIR}/defaults/Redbox_flows.json ${FLOWFILE}
+${flow_output}
+Node-RED will start with an empty flow. Until a flow sends its 'info' message to
+an Edgeberry node, the device interface has no name or links for this box." warning
+        problems=$((problems+1))
+    fi
+fi
+
 # Register the application with Edgeberry
 # Edgeberry owns nginx and proxies /application/* to the app port,
 # so this must succeed for the UI to be reachable.
@@ -518,9 +559,11 @@ fi
 
 ##
 #   Start Node-RED
-#   Last, so that it starts with the freshly installed nodes in its palette.
-#   Node-RED reads its palette and flow once at startup, so starting it any
-#   earlier leaves it running without them until something restarts it.
+#   Last, so that it starts with the freshly installed nodes in its palette and
+#   the default flow already on disk. Node-RED reads both once at startup, so
+#   starting it any earlier leaves it running without them until something
+#   restarts it - and an application that never sent its info is an application
+#   the device interface cannot show.
 ##
 echo ""
 echo -n -e "\e[0mStarting Node-RED \e[0m"

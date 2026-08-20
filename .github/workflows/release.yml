@@ -19,6 +19,7 @@ jobs:
           mkdir tempdir
           mv assets/ tempdir/
           mv config/ tempdir/
+          mv defaults/ tempdir/
           cp edgeberry.json tempdir/
           cp scripts/uninstall.sh tempdir/
           chmod +x tempdir/uninstall.sh
@@ -30,6 +31,24 @@ jobs:
           tag="${{ github.event.release.tag_name }}"
           jq --arg version "${tag}" '.version = $version' tempdir/edgeberry.json > tempdir/edgeberry.json.tmp
           mv tempdir/edgeberry.json.tmp tempdir/edgeberry.json
+
+      # The default flow announces this box to Edgeberry, and the version it
+      # announces is the one the device interface shows. It is a string inside
+      # the inject node's payload, so it is patched here rather than left to go
+      # stale at whatever it was when the flow was last edited by hand.
+      #
+      # Only the shipped default. A device that already has flows keeps them,
+      # and from that point on the version is whatever its owner declares -
+      # this is the *application's* version, not Redbox's.
+      - name: Keep the default flow's announced version in sync with release tag
+        run: |
+          tag="${{ github.event.release.tag_name }}"
+          jq --arg version "${tag}" '
+            map(if .name == "Application info"
+                then .payload = ((.payload | fromjson | .version = $version) | tojson)
+                else . end)
+          ' tempdir/defaults/Redbox_flows.json > tempdir/defaults/Redbox_flows.json.tmp
+          mv tempdir/defaults/Redbox_flows.json.tmp tempdir/defaults/Redbox_flows.json
 
       - name: Create tarball
         run: tar -C tempdir -zcvf package.tar.gz .
