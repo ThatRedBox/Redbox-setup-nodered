@@ -237,8 +237,9 @@ else
 fi
 
 # The Raspberry Pi's SPI and I2C buses are both off by default, and Redbox wants
-# both: the MCP3008 nodes in the palette read their ADC over SPI, and the Edge
-# Explorer hardware cartridge exposes I2C.
+# both: the MCP3008 nodes in the palette read their ADC over SPI, and the I2C
+# nodes talk to whatever sits on the I2C port or the Edge Explorer hardware
+# cartridge.
 #
 # They are enabled through raspi-config rather than by editing config.txt from
 # here. The buses are device-level settings owned by the OS, and raspi-config is

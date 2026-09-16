@@ -9,6 +9,7 @@
     "@edgeberry/device-node-red-contrib": "^3.8.0",
     "@flowfuse/node-red-dashboard": "~1.30.2",
     "node-red-contrib-buffer-parser": "^3.2.2",
+    "node-red-contrib-i2c": "^0.9.0",
     "node-red-contrib-play-audio": "^2.5.0",
     "node-red-node-pi-gpio": "^2.0.7",
     "node-red-node-pi-mcp3008": "~0.6.0",
